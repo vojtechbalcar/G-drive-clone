@@ -1,0 +1,32 @@
+import type { Metadata } from "next";
+import "./globals.css";
+import { Poppins, Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
+const poppins = Poppins(
+    {
+      subsets:['latin'],
+      weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+      variable:'--font-poppins'
+    }
+    );
+
+
+
+export const metadata: Metadata = {
+  title: "StoreIt",
+  description: "A google drive clone",
+};
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
+  return (
+    <html
+      lang="en"
+      className={cn("font-poppins", "h-full", "antialiased", poppins.variable, "font-sans", geist.variable)}
+    >
+      <body className="min-h-full flex flex-col">{children}</body>
+    </html>
+  );
+}
