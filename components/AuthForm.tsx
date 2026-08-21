@@ -16,6 +16,8 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { createAccount } from "@/lib/actions/user.actions";
+import { appwriteConfig } from "@/lib/appwrite/config";
 
 const authFormSchema = (formType: FormType) => {
   return z.object({
@@ -32,6 +34,7 @@ type FormType = "sign-in" | "sign-up";
 const AuthForm = ({ type }: { type: FormType }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [accountId, setAccountId] = useState(null);
 
   const formSchema = authFormSchema(type);
 
@@ -43,9 +46,23 @@ const AuthForm = ({ type }: { type: FormType }) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
+    setErrorMessage("");
+    console.log("secretKey loaded:", !!appwriteConfig.secretKey);
+    try {
+      const user = await createAccount({
+        fullName: values.fullName || "",
+        email: values.email,
+      });
+
+      setAccountId(user.accountId);
+    } catch {
+      setErrorMessage("Failed to create account");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <>
       <Form {...form}>
