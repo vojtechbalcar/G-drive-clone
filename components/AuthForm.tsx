@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { createAccount } from "@/lib/actions/user.actions";
 import { appwriteConfig } from "@/lib/appwrite/config";
+import OTPModal from "@/components/OTPModal";
 
 const authFormSchema = (formType: FormType) => {
   return z.object({
@@ -49,7 +50,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     setErrorMessage("");
-    console.log("secretKey loaded:", !!appwriteConfig.secretKey);
+
     try {
       const user = await createAccount({
         fullName: values.fullName || "",
@@ -153,7 +154,9 @@ const AuthForm = ({ type }: { type: FormType }) => {
           </div>
         </form>
       </Form>
-      {/* OTP Verification */}
+      {accountId && (
+        <OTPModal email={form.getValues("email")} accountId={accountId} />
+      )}
     </>
   );
 };
