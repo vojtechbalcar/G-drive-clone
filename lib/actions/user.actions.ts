@@ -6,7 +6,7 @@ import { ID, Query } from "node-appwrite";
 import { parseStringify } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { avatarPlaceholderUrl } from "@/constants";
-import { email } from "zod/v4";
+import { redirect } from "next/navigation";
 
 const handleError = (error: unknown, message: string) => {
   console.log(error, message);
@@ -108,4 +108,31 @@ export const getCurrentUser = async () => {
   if (user.total <= 0) return null;
 
   return parseStringify(user.documents[0]);
+};
+
+export const signOutUser = async () => {
+  const { account } = await createSessionClient();
+  try {
+    account.deleteSession("current");
+    (await cookies()).delete("appwrite-session");
+  } catch (error) {
+    handleError(error, "Error loggin out");
+  } finally {
+    redirect("/sign-in");
+  }
+};
+
+export const signInUser = async ({ email }: { email: string }) => {
+  try {
+    const existingUser = await getUserByEmail(email);
+
+    if (existingUser) {
+      await sendEmailOTP({ email });
+      return parseStringify({ accountId: existingUser.accountId });
+    }
+
+    return parseStringify({ accountId: null, error: "User not found" });
+  } catch (e) {
+    handleError(e, "Failed to sign in user");
+  }
 };
