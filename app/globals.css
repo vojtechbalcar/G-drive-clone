@@ -214,7 +214,7 @@
 
   /* Type page */
   .page-container {
-    @apply mx-auto flex w-full max-w-7xl flex-col items-center gap-8;
+    @apply mx-2 flex w-full max-w-7xl flex-col items-center gap-8;
   }
   .total-size-section {
     @apply flex mt-2 flex-col justify-between sm:flex-row sm:items-center;
