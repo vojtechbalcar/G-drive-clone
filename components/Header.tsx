@@ -5,17 +5,25 @@ import Search from "@/components/Search";
 import FileUploader from "@/components/FileUploader";
 import { signOutUser } from "@/lib/actions/user.actions";
 
-const Header = () => {
+const Header = ({
+  userId,
+  accountId,
+}: {
+  userId: string;
+  accountId: string;
+}) => {
   return (
     <header className="header">
       <Search />
       <div className="header-wrapper">
-        <FileUploader />
-        <form action={async () => {
-          "use server";
+        <FileUploader ownerId={userId} accountId={accountId} />
+        <form
+          action={async () => {
+            "use server";
 
-          await signOutUser();
-        }}>
+            await signOutUser();
+          }}
+        >
           <Button type="submit" className="sign-out-button">
             <Image
               src="/assets/icons/logout.svg"

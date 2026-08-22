@@ -314,7 +314,7 @@
 
   /* FileUploader */
   .uploader-button {
-    @apply bg-brand hover:bg-brand-100 transition-all rounded-full text-[14px] leading-[20px] font-medium h-[52px] gap-2 px-10 shadow-drop-1;
+    @apply flex items-center bg-brand hover:bg-brand-100 transition-all rounded-full text-white text-[14px] leading-[20px] font-medium h-[52px] gap-2 px-14 shadow-drop-1;
   }
   .uploader-preview-list {
     @apply fixed bottom-10 right-10 z-50 flex size-full h-fit max-w-[480px] flex-col gap-3 rounded-[20px] bg-white p-7 shadow-drop-3;
