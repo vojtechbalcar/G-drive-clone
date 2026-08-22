@@ -130,7 +130,7 @@
     @apply text-red text-[14px] leading-[20px] font-normal ml-4;
   }
   .shad-alert-dialog {
-    @apply space-y-4 max-w-[95%] sm:w-fit rounded-xl md:rounded-[30px] px-4 md:px-8 py-10 bg-white outline-none;
+    @apply space-y-4 max-w-[95%] sm:max-w-[400px] rounded-xl md:rounded-[30px] px-4 md:px-8 py-10 bg-white outline-none;
   }
   .shad-submit-btn {
     @apply bg-brand text-[14px] leading-[20px] font-medium hover:bg-brand-100 transition-all rounded-full;
@@ -139,7 +139,7 @@
     @apply w-full flex gap-1 sm:gap-2 justify-between;
   }
   .shad-otp-slot {
-    @apply text-[40px] font-medium rounded-xl ring-brand shadow-drop-1 text-brand-100 justify-center flex border-2 border-light-300 size-12 md:size-16 gap-5;
+    @apply text-[40px] font-medium rounded-xl ring-brand shadow-drop-1 text-brand-100 justify-center flex border-2 border-light-300 size-11 md:size-14 gap-4;
   }
 
   .shad-sheet {
@@ -366,7 +366,7 @@
 
   /* OTP Modal */
   .otp-close-button {
-    @apply absolute -right-1 -top-7 cursor-pointer sm:-right-2 sm:-top-4 ;
+    @apply absolute right-0 -top-7 cursor-pointer sm:right-0 sm:-top-4 ;
   }
 
   /* Search */
@@ -391,7 +391,7 @@
     @apply hidden h-screen w-[90px] flex-col overflow-auto px-5 py-7 sm:flex lg:w-[280px] xl:w-[325px];
   }
   .sidebar-nav {
-    @apply text-[16px] leading-[24px] font-semibold mt-9 flex-1 gap-1 text-brand;
+    @apply text-[16px] leading-[24px] font-semibold mt-9 flex flex-col flex-1 gap-1 text-brand;
   }
   .sidebar-nav-item {
     @apply flex text-light-100 gap-4 rounded-xl lg:w-full justify-center lg:justify-start items-center text-[16px] leading-[24px] font-semibold lg:px-[30px] h-[52px] lg:rounded-full;
