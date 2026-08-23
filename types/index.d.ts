@@ -2,6 +2,18 @@
 
 declare type FileType = "document" | "image" | "video" | "audio" | "other";
 
+declare type FileDocument = Models.Document & {
+  url: string;
+  name: string;
+  type: string;
+  extension: string;
+  size: number;
+  bucketFileId: string;
+  owner: Models.Document & { fullName: string };
+  accountId: string;
+  users: string[];
+};
+
 declare interface ActionType {
   label: string;
   icon: string;

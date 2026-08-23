@@ -11,15 +11,7 @@ import ActionsDropdown from "@/components/ActionsDropdown";
 const Card = ({
   file,
 }: {
-  file: Models.Document & {
-    url: string;
-    name: string;
-    type: string;
-    extension: string;
-    size: number;
-    bucketFileId: string;
-    owner: Models.Document & { fullName: string };
-  };
+  file: FileDocument;
 }) => {
   const handleCardClick = () => {
     window.open(file.url, "_blank");

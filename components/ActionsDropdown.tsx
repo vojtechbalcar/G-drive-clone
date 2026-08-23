@@ -26,27 +26,23 @@ import Image from "next/image";
 import { actionsDropdownItems } from "@/constants";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
+import { renameFile } from "@/lib/actions/file.actions";
+import { usePathname } from "next/navigation";
+import { FileDetails } from "@/components/ActionsModalContent";
 
 const ActionsDropdown = ({
   file,
   className,
 }: {
   className?: string;
-  file: Models.Document & {
-    url: string;
-    name: string;
-    type: string;
-    extension: string;
-    size: number;
-    bucketFileId: string;
-    owner: Models.Document & { fullName: string };
-  };
+  file: FileDocument;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [action, setAction] = useState<ActionType | null>(null);
   const [name, setName] = useState(file.name);
   const [isLoading, setIsLoading] = useState(false);
+  const path = usePathname();
 
   const closeAllModals = () => {
     setIsModalOpen(false);
@@ -55,7 +51,23 @@ const ActionsDropdown = ({
     setName(file.name);
   };
 
-  const handleAction = async () => {};
+  const handleAction = async () => {
+    if (!action) return;
+    setIsLoading(true);
+    let success = false;
+
+    const actions = {
+      rename: () =>
+        renameFile({ fileId: file.$id, name, extension: file.extension, path }),
+      share: () => {},
+    };
+
+    success = await actions[action.value as keyof typeof actions]();
+
+    if (success) closeAllModals();
+
+    setIsLoading(false);
+  };
 
   const renderDigalogContent = () => {
     if (!action) {
@@ -66,7 +78,7 @@ const ActionsDropdown = ({
     return (
       <DialogContent className="shad-dialog button">
         <DialogHeader className="flex flex-col gap-3">
-          <DialogTitle className="text-center text-light-100">
+          <DialogTitle className="text-center text-light-100  mb-4">
             {label}
           </DialogTitle>
           {value === "rename" && (
@@ -76,6 +88,7 @@ const ActionsDropdown = ({
               onChange={(e) => setName(e.target.value)}
             />
           )}
+          {value === "details" && <FileDetails file={file} />}
         </DialogHeader>
         {["rename", "delete", "share"].includes(value) && (
           <DialogFooter className="!m-0 !flex !flex-col items-center gap-3 border-none bg-transparent p-0">
