@@ -68,6 +68,20 @@ const createQueries = (currentUser: Models.Document & { email: string }) => {
       Query.equal("owner", [currentUser.$id]),
       Query.contains("users", [currentUser.email]),
     ]),
+    Query.select([
+      "$id",
+      "$createdAt",
+      "$updatedAt",
+      "type",
+      "name",
+      "url",
+      "extension",
+      "size",
+      "owner.*",
+      "accountId",
+      "users",
+      "bucketFileId",
+    ]),
   ];
 
   return queries;
